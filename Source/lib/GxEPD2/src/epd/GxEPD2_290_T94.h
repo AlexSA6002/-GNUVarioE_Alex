@@ -2,8 +2,8 @@
 // Requires HW SPI and Adafruit_GFX. Caution: the e-paper panels require 3.3V supply AND data lines!
 //
 // based on Demo Example from Good Display, available here: http://www.e-paper-display.com/download_detail/downloadsId=806.html
-// Panel: GDEH0154D67 : http://www.e-paper-display.com/products_detail/productId=455.html
-// Controller : SSD1681 : http://www.e-paper-display.com/download_detail/downloadsId=825.html
+// Panel: GDEM029T94 : https://www.good-display.com/product/360.html
+// Controller : SSD1680 : https://www.good-display.com/companyfile/101.html
 //
 // Author: Jean-Marc Zingg
 //
@@ -11,27 +11,27 @@
 //
 // Library: https://github.com/ZinggJM/GxEPD2
 
-#ifndef _GxEPD2_154_D67_H_
-#define _GxEPD2_154_D67_H_
+#ifndef _GxEPD2_290_T94_H_
+#define _GxEPD2_290_T94_H_
 
 #include "../GxEPD2_EPD.h"
 
-class GxEPD2_154_D67 : public GxEPD2_EPD
+class GxEPD2_290_T94 : public GxEPD2_EPD
 {
   public:
     // attributes
-    static const uint16_t WIDTH = 200;
-    static const uint16_t HEIGHT = 200;
-    static const GxEPD2::Panel panel = GxEPD2::GDEH0154D67;
+    static const uint16_t WIDTH = 128;
+    static const uint16_t HEIGHT = 296;
+    static const GxEPD2::Panel panel = GxEPD2::GDEM029T94;
     static const bool hasColor = false;
     static const bool hasPartialUpdate = true;
     static const bool hasFastPartialUpdate = true;
-    static const uint16_t power_on_time = 100; // ms, e.g. 95583us
-    static const uint16_t power_off_time = 150; // ms, e.g. 140621us
-    static const uint16_t full_refresh_time = 2600; // ms, e.g. 2509602us
-    static const uint16_t partial_refresh_time = 500; // ms, e.g. 457282us
+    static const uint16_t power_on_time = 100; // ms, e.g. 95868us
+    static const uint16_t power_off_time = 150; // ms, e.g. 140350us
+    static const uint16_t full_refresh_time = 3200; // ms, e.g. 3154996us
+    static const uint16_t partial_refresh_time = 500; // ms, e.g. 458231us
     // constructor
-    GxEPD2_154_D67(int8_t cs, int8_t dc, int8_t rst, int8_t busy);
+    GxEPD2_290_T94(int8_t cs, int8_t dc, int8_t rst, int8_t busy);
     // methods (virtual)
     //  Support for Bitmaps (Sprites) to Controller Buffer and to Screen
     void clearScreen(uint8_t value = 0xFF); // init controller memory and screen (default white)
