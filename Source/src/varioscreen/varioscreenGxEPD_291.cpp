@@ -324,15 +324,15 @@ void VarioScreen::init(void)
 	SerialPort.println("fillScreen");	
 #endif //SCREEN_DEBUG
 
-  display.setFullWindow();
+//   display.setFullWindow();
 
-  display.fillScreen(GxEPD_WHITE);
+//   display.fillScreen(GxEPD_WHITE);
 	
 #ifdef SCREEN_DEBUG
 	SerialPort.println("setTextColor");	
 #endif //SCREEN_DEBUG
 	
-  display.setTextColor(GxEPD_BLACK);
+//   display.setTextColor(GxEPD_BLACK);
 	
   screenMutex = xSemaphoreCreateBinary();
   xSemaphoreGive(screenMutex);
@@ -843,18 +843,24 @@ void VarioScreen::ScreenViewInit(uint8_t Version, uint8_t Sub_Version, String Au
 // ****************************************************************************************************************************
 {
   char tmpbuffer[100];
-	
+
+	display.setFont(&FreeSansBold9pt7b);
+	display.setTextColor(GxEPD_BLACK);
   display.setFullWindow();
+	
+//   display.setFullWindow();
+//   display.setPartialWindow(0, 0, display.width(), display.height());
   display.firstPage();
   do
   {
-// 	  display.fillScreen(ColorScreen);
-//		display.clearScreen(ColorScreen);
+	  display.fillScreen(GxEPD_WHITE);
+	  // display.fillScreen(ColorScreen);
+		// display.clearScreen(ColorScreen);
 
 		display.drawInvertedBitmap(15, 26, logo_gnuvario, 94, 74, ColorText); //94
 
-		display.setFont(&FreeSansBold9pt7b);
-		display.setTextColor(ColorText);
+		// display.setFont(&FreeSansBold9pt7b);
+		// display.setTextColor(ColorText);
 		display.setTextSize(1);
 
 		display.setCursor(30, 130);
@@ -892,6 +898,11 @@ void VarioScreen::ScreenViewInit(uint8_t Version, uint8_t Sub_Version, String Au
 	
 	unsigned long TmplastDisplayTimestamp = millis();
 	int compteur = 0;
+
+			display.setPartialWindow(0, 215, 128, 20);
+			display.setFont(&FreeSansBold9pt7b);
+			display.setTextColor(GxEPD_BLACK);
+
 	while (compteur < 3) {
 
 		ButtonScheduleur.update();
@@ -902,12 +913,24 @@ void VarioScreen::ScreenViewInit(uint8_t Version, uint8_t Sub_Version, String Au
 
 			TmplastDisplayTimestamp = millis();
 			compteur++;
-		
-		  display.fillRect(3, 250, 128, -40, GxEPD_WHITE);
+
+			if (compteur == 1) {
+				display.firstPage();
+				do	{			
+					display.fillRect(0, 215, 128, 20, GxEPD_WHITE);
+				}
+				while (display.nextPage());
+			}
 
 		  if ((compteur % 2) == 0) {
-				display.setCursor(5, 230);
-				display.print("GNUVARIO-E");
+
+				display.firstPage();
+				do	{
+					display.setCursor(5, 230);
+					display.print("GNUVARIO-E");
+				}
+				while (display.nextPage());
+
 #ifdef SCREEN_DEBUG
 				SerialPort.println("Gnuvario-E");	
 #endif //SCREEN_DEBUG
@@ -918,7 +941,7 @@ void VarioScreen::ScreenViewInit(uint8_t Version, uint8_t Sub_Version, String Au
 #endif //SCREEN_DEBUG
 
 			}
-			updateScreen ();
+			// updateScreen ();
 		}
 	}
 	
@@ -944,14 +967,14 @@ void VarioScreen::ScreenViewPage(int8_t page, boolean clear, boolean refresh)
 
   if (clear) {
 	  display.setFullWindow();	
-		display.clearScreen(ColorScreen);
+		// display.clearScreen(ColorScreen);
 		display.fillScreen(ColorScreen);
 			}
 	
 #ifdef SCREEN_DEBUG
 	SerialPort.println("setTextColor");	
 #endif //SCREEN_DEBUG
-	display.clearScreen(ColorScreen);
+	// display.clearScreen(ColorScreen);
   display.fillScreen(ColorScreen);
   display.setTextColor(GxEPD_BLACK);//display.setTextColor(GxEPD_BLACK);
 	
@@ -1063,12 +1086,12 @@ void VarioScreen::ScreenViewStat(void)
 {
 	delay(100);
   display.setFullWindow();
-  display.clearScreen(ColorScreen);
-  display.fillScreen(ColorScreen);
+  // display.clearScreen(ColorScreen);
+  // display.fillScreen(ColorScreen);
   display.firstPage();
   do
   {
-// 	  display.fillScreen(ColorScreen);
+	  display.fillScreen(ColorScreen);
 //		display.clearScreen(ColorScreen);
 
 		ScreenViewStatPage(0);
@@ -1965,8 +1988,14 @@ void ScreenScheduler::setPage(int8_t page, boolean forceUpdate)  {
 
   /* screen need to by cleared */
 //  display.clearScreen();
- // display.eraseDisplay();
-  display.fillRect(0, 0, display.width(), display.height(), GxEPD_WHITE);
+//  display.eraseDisplay();
+	  display.setFullWindow();	
+		display.clearScreen(ColorScreen);
+		display.fillScreen(ColorScreen);
+
+		// display.fillScreen(ColorScreen);
+
+	  // display.fillRect(0, 0, display.width(), display.height(), GxEPD_BLACK);
 
 	if (currentPage == endPage+1) {
 		displayStat = true;
