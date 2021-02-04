@@ -326,7 +326,8 @@ Fly stat        0xD0		26+2
 #endif
 
 /* Set the freq */
-#define VARIO_TW_FREQ 400000UL
+// #define VARIO_TW_FREQ 400000UL
+#define VARIO_TW_FREQ 100000UL
 
 /*********************/
 /* MPU 9250 / MS5611 */
